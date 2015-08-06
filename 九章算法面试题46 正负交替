@@ -1,0 +1,74 @@
+import java.util.*;
+
+/**
+ * Created by Jiazhang_Liu on 6/19/2015.
+ */
+public class Solution {
+    public void shift(int[] array) {
+        if(array == null || array.length == 0) {
+            return;
+        }
+
+        int start = 0, curr = 1;
+        int shouldBePositive = 1;
+        while(start < array.length) {
+            while(start < array.length && sameSign(array[start],shouldBePositive )) {
+                start++;
+                shouldBePositive *= -1;
+            }
+
+            curr = start+1;
+
+            while(curr < array.length && sameSign(array[start], array[curr])) {
+                curr++;
+            }
+
+            if(curr > array.length -1) {
+                break;
+            }
+
+            int temp = array[start];
+            array[start] = array[curr];
+            array[curr] = temp;
+
+            start += 2;
+        }
+    }
+
+    public boolean sameSign(int num1, int num2) {
+        if(num1 == 0 && num2 == 0) {
+            return true;
+        }
+        if(num1 == 0) {
+            return num2 > 0;
+        }
+        if(num2 == 0) {
+            return num1 > 0;
+        }
+        long result = num1 * num2;
+        return  result > 0;
+    }
+
+    public void print(int[] array) {
+        for(Integer i : array) {
+            System.err.print(i + " ");
+        }
+        System.err.println();
+    }
+
+    public static void main(String args[]) {
+        Solution s = new Solution();
+
+        int[] array = {-33,-19,30,26,21,-9};
+        s.print(array);
+        s.shift(array);
+        s.print(array);
+    }
+
+    public static class Machine {
+        int seriesNumber;
+        public Machine(int seriesNumber) {
+            this.seriesNumber = seriesNumber;
+        }
+    }
+}
